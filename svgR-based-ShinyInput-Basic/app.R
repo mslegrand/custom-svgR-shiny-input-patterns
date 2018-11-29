@@ -2,7 +2,7 @@ library(shiny)
 source("ellipseCntrl.R")
 
 ui <- fluidPage(
-    titlePanel('Simple svgR-based radio controls with some update meager capabilities'),
+    titlePanel('Simple svgR-based radio controls with sans update capabilities'),
     fluidRow(
         column(6, wellPanel(
             h2("First simple svgR-based control"),
