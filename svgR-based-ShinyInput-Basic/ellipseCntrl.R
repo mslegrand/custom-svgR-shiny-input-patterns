@@ -3,10 +3,12 @@ library(svgR)
 # --- begin  R-code for input control contruction for the server---
 
 # constructs the svg object
-ellipseCntrlSvg<-function(WH, ids=c('id1','id2'), relayClick="", textLeft='left',textRight='right'){
+ellipseCntrlSvg<-function(WH, inputId, relayClick="", textLeft='left',textRight='right'){
     # svgR setup
     rxy2<-rxy1<-cxy1<-.25*WH
     cxy2<-c(.75,.25)*WH
+    ids<-paste0(inputId,c('id1','id2'))
+    
     # svgR construction
     svgR(wh=WH,
          g(
@@ -29,18 +31,17 @@ ellipseCntrlSvg<-function(WH, ids=c('id1','id2'), relayClick="", textLeft='left'
 }
 
 # prepares the svg for insertion into the controls tagList
-newEllipseCntrl<-function(WH, ids, relayClick=""){
-    svg<-ellipseCntrlSvg(WH, ids, relayClick)
+newEllipseCntrl<-function(WH, inputId, relayClick=""){
+    svg<-ellipseCntrlSvg(WH, inputId, relayClick)
     HTML(as.character(svg))
 }
 
 # constructor for the custom control
 ellipseCntrl<-function(inputId, wh){
-    ids<-paste0(inputId,c('id1','id2'))
     relayClick<-function(value=""){sprintf("ellipseCntrlBinding.setValue('#%s','%s')",inputId,value)}
     tagList(
         singleton(tags$head(tags$script(src = "ellipseCntrl.js"))),
-        div( id=inputId, newEllipseCntrl(WH=wh,  ids=ids, relayClick=relayClick), class="ellipseCntrl" )        
+        div( id=inputId, newEllipseCntrl(WH=wh,  inputId=inputId, relayClick=relayClick), class="ellipseCntrl" )        
     )
 }
 
